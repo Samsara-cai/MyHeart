@@ -8,7 +8,7 @@
 
 提交信息包括两个个字段：
 
-<type>:<subject>
+```<type>:<subject>```
 
 ### type: commit 类型
 
