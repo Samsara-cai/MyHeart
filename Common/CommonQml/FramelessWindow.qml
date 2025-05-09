@@ -18,7 +18,7 @@ ApplicationWindow{
         }
     }
 
-    // The mouse area is just for setting the right cursor shape
+    //只是为了改变鼠标形状，不处理任何鼠标事件
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
@@ -32,7 +32,8 @@ ApplicationWindow{
             if (p.x < b || p.x >= width - b) return Qt.SizeHorCursor;
             if (p.y < b || p.y >= height - b) return Qt.SizeVerCursor;
         }
-        acceptedButtons: Qt.NoButton // don't handle actual events
+
+        acceptedButtons: Qt.NoButton
     }
 
     DragHandler {
@@ -51,10 +52,11 @@ ApplicationWindow{
                          }
     }
 
-    ToolBar {
-        width: parent.width-2*bw
+    header:ToolBar {
+        width: parent.width
         height: 30
-        x:bw;y:bw
+        x:0
+        y:0
         Item {
             anchors.fill: parent
             TapHandler {
@@ -66,6 +68,52 @@ ApplicationWindow{
                 onActiveChanged: if (active) { window.startSystemMove(); }
             }
 
+        }
+
+        Text {
+            id: authorMsg
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.verticalCenter: parent.verticalCenter
+            text: qsTr("Author: XinYi Cai. Contact Email: cxy_hfut@163.com.")
+        }
+
+        Button {
+            id: closeBtn
+            width: 35
+            height: 35
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.verticalCenter: parent.verticalCenter
+
+            onClicked: {
+
+            }
+        }
+
+        Button {
+            id: minMaxBtn
+            width: 35
+            height: 35
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+                toggleMaximized()
+                //TODO::改变图标
+            }
+        }
+
+        Button {
+            id: hideBtn
+            width: 35
+            height: 35
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+                //TODO::最小化
+            }
         }
     }
 }
