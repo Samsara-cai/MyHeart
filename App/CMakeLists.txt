@@ -1,1 +1,1 @@
-add_subdirectory(SerialportTools)
+add_subdirectory(Connections)

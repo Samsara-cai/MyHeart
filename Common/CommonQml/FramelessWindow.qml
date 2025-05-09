@@ -4,11 +4,11 @@ import QtQuick.Controls
 ApplicationWindow{
     id: window
     visible: true
-    flags: Qt.FramelessWindowHint
-    width: 300
-    height: 300
-    color: "white"
-    property int bw: 3
+    flags: Qt.FramelessWindowHint | Qt.Window
+    minimumWidth: 1200
+    minimumHeight: 800
+    color: "#1f1f1f"
+    property int bw: 10
 
     function toggleMaximized() {
         if (window.visibility === Window.Maximized) {
@@ -18,45 +18,22 @@ ApplicationWindow{
         }
     }
 
-    //只是为了改变鼠标形状，不处理任何鼠标事件
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: {
-            const p = Qt.point(mouseX, mouseY);
-            const b = bw + 10; // Increase the corner size slightly
-            if (p.x < b && p.y < b) return Qt.SizeFDiagCursor;
-            if (p.x >= width - b && p.y >= height - b) return Qt.SizeFDiagCursor;
-            if (p.x >= width - b && p.y < b) return Qt.SizeBDiagCursor;
-            if (p.x < b && p.y >= height - b) return Qt.SizeBDiagCursor;
-            if (p.x < b || p.x >= width - b) return Qt.SizeHorCursor;
-            if (p.y < b || p.y >= height - b) return Qt.SizeVerCursor;
-        }
 
-        acceptedButtons: Qt.NoButton
-    }
 
-    DragHandler {
-        id: resizeHandler
-        grabPermissions: TapHandler.TakeOverForbidden
-        target: null
-        onActiveChanged: if (active) {
-                             const p = resizeHandler.centroid.position;
-                             const b = bw + 10; // Increase the corner size slightly
-                             let e = 0;
-                             if (p.x < b) { e |= Qt.LeftEdge }
-                             if (p.x >= width - b) { e |= Qt.RightEdge }
-                             if (p.y < b) { e |= Qt.TopEdge }
-                             if (p.y >= height - b) { e |= Qt.BottomEdge }
-                             window.startSystemResize(e);
-                         }
-    }
-
-    header:ToolBar {
+    ToolBar {
         width: parent.width
-        height: 30
+        height: 42
+        leftPadding: 0
+        rightPadding: 0
         x:0
         y:0
+
+        background: Rectangle {
+            border.width: 0
+            anchors.fill: parent
+            color: "#181818"   // 设置你想要的颜色
+        }
+
         Item {
             anchors.fill: parent
             TapHandler {
@@ -64,57 +41,159 @@ ApplicationWindow{
                 gesturePolicy: TapHandler.DragThreshold
             }
             DragHandler {
-                grabPermissions: TapHandler.CanTakeOverFromAnything
+                id: moveHandler
+                grabPermissions: DragHandler.TakeOverForbidden
                 onActiveChanged: if (active) { window.startSystemMove(); }
             }
 
         }
 
-        Text {
-            id: authorMsg
+        Image {
+            id: appLogo
             anchors.left: parent.left
-            anchors.leftMargin: 5
-            anchors.verticalCenter: parent.verticalCenter
-            text: qsTr("Author: XinYi Cai. Contact Email: cxy_hfut@163.com.")
+            width: 42
+            height: 42
         }
 
-        Button {
+
+        ToolButton {
             id: closeBtn
-            width: 35
-            height: 35
+            width: 42
+            height: 42
             anchors.right: parent.right
-            anchors.rightMargin: 5
             anchors.verticalCenter: parent.verticalCenter
+            onClicked: window.close()
 
-            onClicked: {
+            icon.source: "qrc:/qt/qml/CommonQml/img/close.svg"
 
+            background: Rectangle {
+                anchors.fill: parent
+                color: closeBtn.hovered ? "#e81123" : "transparent"
             }
         }
 
-        Button {
-            id: minMaxBtn
-            width: 35
-            height: 35
-            anchors.right: parent.right
-            anchors.rightMargin: 5
+        ToolButton {
+            id: maxBtn
+            width: 42
+            height: 42
+            anchors.right: closeBtn.left
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
                 toggleMaximized()
-                //TODO::改变图标
+            }
+
+            icon.source: window.visibility === Window.Maximized ?
+                         "qrc:/qt/qml/CommonQml/img/normalize.svg" :
+                         "qrc:/qt/qml/CommonQml/img/maxmize.svg"
+
+            background: Rectangle {
+                anchors.fill: parent
+                color: maxBtn.hovered ? "#373737" : "transparent"
+            }
+
+            // 自动更新图标（绑定）
+            Component.onCompleted: window.visibilityChanged.connect(() => maxBtn.forceActiveFocus())
+        }
+
+        ToolButton {
+            id: minBtn
+            width: 42
+            height: 42
+            anchors.right: maxBtn.left
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: window.showMinimized()
+
+            icon.source: "qrc:/qt/qml/CommonQml/img/minimize.svg"
+
+            background: Rectangle {
+                anchors.fill: parent
+                color: minBtn.hovered ? "#373737" : "transparent"
             }
         }
 
-        Button {
-            id: hideBtn
-            width: 35
-            height: 35
-            anchors.right: parent.right
-            anchors.rightMargin: 5
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: {
-                //TODO::最小化
+    }
+
+    //改变鼠标形状，不处理任何鼠标事件
+    MouseArea {
+        id: mainArea
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: {
+
+            function isInItem(item) {
+                const localPos = item.mapFromItem(mainArea, mouseX, mouseY);
+                return item.contains(localPos);
+            }
+
+            // 如果鼠标在标题栏按钮上，不处理
+            if (isInItem(closeBtn) || isInItem(maxBtn) || isInItem(minBtn)) {
+                moveHandler.enabled = false;
+                resizeHandler.enabled = false;
+                return Qt.ArrowCursor;
+            }
+
+
+            if (window.visibility === Window.Maximized) {
+                //最大化只允许拖动
+                moveHandler.enabled = true;
+                resizeHandler.enabled = false;
+                return Qt.ArrowCursor;
+            }
+
+            const p = Qt.point(mouseX, mouseY);
+            const b = bw ;
+            if (p.x < b && p.y < b){ return Qt.SizeFDiagCursor;}
+            else if (p.x >= width - b && p.y >= height - b){
+                moveHandler.enabled = false;
+                resizeHandler.enabled = true;
+                return Qt.SizeFDiagCursor;
+            }
+            else if (p.x >= width - b && p.y < b){
+                moveHandler.enabled = false;
+                resizeHandler.enabled = true;
+                return Qt.SizeBDiagCursor;
+            }
+            else if (p.x < b && p.y >= height - b){
+                moveHandler.enabled = false;
+                resizeHandler.enabled = true;
+                return Qt.SizeBDiagCursor;
+            }
+            else if (p.x < b || p.x >= width - b) {
+                moveHandler.enabled = false;
+                resizeHandler.enabled = true;
+                return Qt.SizeHorCursor;
+            }
+            else if (p.y < b || p.y >= height - b) {
+                moveHandler.enabled = false;
+                resizeHandler.enabled = true;
+                return Qt.SizeVerCursor;
+            }
+            else{
+                moveHandler.enabled = true;
+                resizeHandler.enabled = false;
+                return Qt.ArrowCursor;
             }
         }
+        acceptedButtons: Qt.NoButton
     }
+
+    DragHandler {
+        id: resizeHandler
+        grabPermissions: DragHandler.CanTakeOverFromItems
+        target: null
+        dragThreshold: 3
+        onActiveChanged: if (active) {
+                             const p = resizeHandler.centroid.position;
+                             const b = bw; // Increase the corner size slightly
+                             let e = 0;
+                             if (p.x < b) { e |= Qt.LeftEdge }
+                             if (p.x >= width - b) { e |= Qt.RightEdge }
+                             if (p.y < b) { e |= Qt.TopEdge }
+                             if (p.y >= height - b) { e |= Qt.BottomEdge }
+                             if(e!=0)
+                                 window.startSystemResize(e);
+                         }
+    }
+
 }
 

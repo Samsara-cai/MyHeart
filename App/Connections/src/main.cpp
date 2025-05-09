@@ -1,15 +1,15 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QFileInfo>
+#include <QIcon>
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
+    app.setWindowIcon(QIcon(":/resources/img/app.ico"));
+
     QQmlApplicationEngine engine;
-
-    const QUrl url("qrc:/qt/qml/SerialportTools/qml/main.qml");
-
-    engine.addImportPath(QString("G:/MyHeart/build/Desktop_Qt_6_8_0_MSVC2022_64bit-Release/Common/CommonQml"));
-
+    const QUrl url("qrc:/qt/qml/Connections/qml/main.qml");
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
                          if (!obj && url == objUrl)
@@ -17,6 +17,5 @@ int main(int argc, char *argv[])
                      }, Qt::QueuedConnection);
 
     engine.load(url);
-
     return app.exec();
 }

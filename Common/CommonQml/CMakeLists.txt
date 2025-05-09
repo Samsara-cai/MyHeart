@@ -35,7 +35,7 @@ project(CommonQml LANGUAGES CXX)
 # endif()
 
 find_package(Qt6 REQUIRED COMPONENTS Qml Quick Core QuickControls2)
-qt6_standard_project_setup(REQUIRES 6.5)
+qt6_standard_project_setup(REQUIRES 6.8)
 
 # 主模块声明
 qt_add_qml_module(CommonQml
@@ -44,8 +44,13 @@ qt_add_qml_module(CommonQml
     SHARED
     QML_FILES
         FramelessWindow.qml
+    RESOURCES
+        img/close.svg
+        img/maxmize.svg
+        img/minimize.svg
+        img/normalize.svg
 )
 
 
-target_link_libraries(CommonQml PUBLIC Qt6::Qml Qt6::Quick Qt6::Core Qt6::QuickControls2)
+target_link_libraries(CommonQml PRIVATE Qt6::Qml Qt6::Quick Qt6::Core Qt6::QuickControls2)
 
