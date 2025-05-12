@@ -15,8 +15,13 @@ ApplicationWindow{
     minimumWidth: 1200
     minimumHeight: 800
     color: "#1f1f1f"
-    readonly property int resizeHandlerWidth: 7
+
+    //公开可修改属性
     property alias logoSources: appLogo.source
+
+    //只读属性
+    readonly property int resizeHandlerWidth: 7
+    readonly property alias windowTitle: titleBar
 
     function toggleMaximized() {
         if (window.visibility === Window.Maximized) {
@@ -29,6 +34,7 @@ ApplicationWindow{
 
 
     ToolBar {
+        id:titleBar
         width: parent.width
         height: 40
         leftPadding: 0
