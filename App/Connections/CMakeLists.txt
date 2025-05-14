@@ -31,7 +31,9 @@ qt_add_qml_module(Connections
     URI Connections
     QML_FILES
         qml/main.qml
-        SOURCES src/WindowsEventFilter.h src/WindowsEventFilter.cpp
+    SOURCES
+        src/WindowsEventFilter.h
+        src/WindowsEventFilter.cpp
 )
 
 
