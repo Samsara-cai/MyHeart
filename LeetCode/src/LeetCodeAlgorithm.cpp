@@ -2,6 +2,49 @@
 #include <unordered_map>
 #include <algorithm>
 
+
+/**
+    * @brief 求两个正向排列的数组中第K小的数字
+    * @param A 数组1
+    * @param aIndex 数组1的参与比较的第一个元素的下标
+    * @param B 数组2
+    * @param bIndex 数组2的参与比较的第一个元素的下标
+    * @param k 第k小
+    */
+int getKth(const std::vector<int> &A,int aIndex,const std::vector<int>& B ,int bIndex,int k){
+
+    //保证长度小的数组在前
+    if(A.size()>B.size()) return getKth(B,bIndex,A,aIndex,k);
+
+    if(A.size() == 0) return B.at(k);
+
+    if(k==1) return B[bIndex]<=A[aIndex]?B[bIndex]:A[aIndex];
+
+    int oldAIndex = aIndex;
+    int oldBIndex = bIndex;
+
+    if(aIndex + k/2 >= A.size())
+    {
+        aIndex = A.size() -1 ;
+    }else{
+        aIndex += k/2;
+    }
+
+    if(bIndex + k/2 >= B.size())
+    {
+        bIndex = B.size() - 1;
+    }else{
+        bIndex += k / 2;
+    }
+
+    if(B[bIndex]>A[aIndex]){
+        return getKth(A,aIndex,B,oldBIndex ,k - aIndex );
+    }else{
+        return getKth(A,oldAIndex,B,bIndex ,k - bIndex);
+    }
+
+};
+
 /**
  * @brief 时间复杂度0(N^2)   控件复杂度O(1)
  */
@@ -60,23 +103,8 @@ std::pair<int,int> getTargetSumOneIndex(const std::vector<int>& arrays,int targe
 
 float getMediaSortedArray(std::vector<int> nums1,std::vector<int> nums2)
 {
-    /**
-     * @brief 求两个正向排列的数组中第K小的数字
-     * @param A 数组1
-     * @param aIndex 数组1的参与比较的第一个元素的下标
-     * @param B 数组2
-     * @param bIndex 数组2的参与比较的第一个元素的下标
-     * @param k 第k小
-     */
-    auto getKth = [](const std::vector<int> &A,int aIndex,const std::vector<int>& B ,int bIndex,int k)->int{
-        int aNewIndex,bNewIndex;
-        int offset = k/2;
-
-    };
-
     int size1 = nums1.size();
     int size2 = nums2.size();
-
 
     if(size1 == 0 && size2 ==0)
         return -1;
@@ -89,4 +117,13 @@ float getMediaSortedArray(std::vector<int> nums1,std::vector<int> nums2)
     k2 = getKth(nums1,0,nums2,0,k2);
 
     return (k1 + k2)/2;
+}
+
+
+float getMediaSortedArray(std::vector<int> nums1)
+{
+    int i =0,j=nums1.size() -1,area = 0;
+    while(i!=j)
+        area = std::max<int>(area,nums1[i]<nums1[j] ? nums1[i++]*(j-i) : nums1[j--]*(j-i));
+    return area;
 }

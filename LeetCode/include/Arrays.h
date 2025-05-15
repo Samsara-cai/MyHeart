@@ -29,4 +29,11 @@ LEETCODE_API std::pair<int,int> getTargetSumOneIndex(const std::vector<int>& arr
  */
 LEETCODE_API float getMediaSortedArray(std::vector<int> nums1,std::vector<int> nums2);
 
+/**
+ * @brief 给定一个长度为 n 的整数数组 height 。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。
+          找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+          返回height数组可以储存的最大水量。
+ */
+LEETCODE_API float getMediaSortedArray(std::vector<int> nums1);
+
 #endif // DEFINE_H

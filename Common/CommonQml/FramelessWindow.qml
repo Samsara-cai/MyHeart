@@ -36,7 +36,7 @@ ApplicationWindow{
     ToolBar {
         id:titleBar
         width: parent.width
-        height: 40
+        height: 35
         leftPadding: 0
         rightPadding: 0
         x:0
@@ -85,8 +85,8 @@ ApplicationWindow{
 
         ToolButton {
             id: closeBtn
-            width: 40
-            height: 40
+            width: 35
+            height: 35
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             onClicked: window.close()
@@ -101,8 +101,8 @@ ApplicationWindow{
 
         ToolButton {
             id: maxBtn
-            width: 40
-            height: 40
+            width: 35
+            height: 35
             anchors.right: closeBtn.left
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
@@ -124,8 +124,8 @@ ApplicationWindow{
 
         ToolButton {
             id: minBtn
-            width: 40
-            height: 40
+            width: 35
+            height: 35
             anchors.right: maxBtn.left
             anchors.verticalCenter: parent.verticalCenter
             onClicked: window.showMinimized()

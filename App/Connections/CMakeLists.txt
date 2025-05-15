@@ -22,6 +22,9 @@ qt_add_executable(Connections
 qt_add_resources(Connections app.qrc
                 FILES
                     resources/img/app.ico
+                    resources/img/connections.svg
+                    resources/img/protocal.svg
+                    resources/img/settings.svg
 )
 
 
