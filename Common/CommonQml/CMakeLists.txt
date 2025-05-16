@@ -49,6 +49,8 @@ qt_add_qml_module(CommonQml
         img/maxmize.svg
         img/minimize.svg
         img/normalize.svg
+        QML_FILES BubbleToolTip.qml
+        QML_FILES
 )
 
 

@@ -36,6 +36,17 @@ FramelessWindow{
             checkable:true
             checked:true
 
+            // @disable-check M300
+            BubbleToolTip{
+                id:connectionBtnTip
+                x:parent.width
+                y:(parent.height - height) / 2
+                currentPosition: BubbleToolTip.ToolTipPositionEnum.LEFT
+                delay:1000
+                timeout: 5000
+                tipText: qsTr("连接管理")
+                visible:connectionBtn.hovered
+            }
 
             background: Rectangle{
                 id:connectionBtnBg
@@ -50,7 +61,6 @@ FramelessWindow{
                     visible: connectionBtn.checked
                 }
             }
-
             onCheckedChanged: {
                 //TODO: 打开连接的stackView
             }
@@ -71,6 +81,17 @@ FramelessWindow{
             checkable:true
             checked:false
 
+            // @disable-check M300
+            BubbleToolTip{
+                id:protocalBtnTip
+                x:parent.width
+                y:(parent.height - height) / 2
+                currentPosition: BubbleToolTip.ToolTipPositionEnum.LEFT
+                delay:1000
+                timeout: 5000
+                tipText: qsTr("协议管理")
+                visible:protocalBtn.hovered
+            }
 
             background: Rectangle{
                 id:protocalBtnBg
@@ -97,6 +118,19 @@ FramelessWindow{
             icon.width: 28
             icon.height: 28
             icon.color: hovered ? "#ffffff" : "#868686"
+
+            // @disable-check M300
+            BubbleToolTip{
+                id:settingBtnTip
+                x:parent.width
+                y:(parent.height - height) / 2
+                currentPosition: BubbleToolTip.ToolTipPositionEnum.LEFT
+                delay:1000
+                timeout: 5000
+                tipText: qsTr("设置")
+                visible:settingBtn.hovered
+            }
+
             background: Rectangle{
                 id:settingBtnBg
                 color: "transparent"
@@ -111,6 +145,6 @@ FramelessWindow{
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         color:"#181818"
-
     }
+
 }
