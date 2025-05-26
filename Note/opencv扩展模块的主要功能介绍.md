@@ -1,0 +1,50 @@
+### 模块简介
+
+- **alphamat**: 基于计算机视觉的Alpha抠图 —— 输入图像和遮罩图（trimap），生成alpha蒙版。
+- **aruco**: ArUco与ChArUco标记 —— 增强现实中的ArUco标记及棋盘格内嵌ArUco的"ChArUco"复合标记。
+- **bgsegm**: 背景分割算法 —— 结合统计背景估计与逐像素贝叶斯分割。
+- **bioinspired**: 生物视觉模型 —— 抑制噪声和亮度变化、瞬态事件分割、HDR色调映射。
+- **ccalib**: 定制化标定 —— 支持3D重建、全景相机标定、随机模式标定及多相机标定。
+- **cnn_3dobj**: 三维物体深度学习识别与姿态估计 —— 基于Caffe构建、训练和测试CNN模型。
+- **cvv**: 计算机视觉调试器 —— 提供GUI交互式调试视觉程序的功能。
+- **datasets**: 数据集读取器 —— 读取标准视觉数据集并支持训练/测试的示例代码。
+- **dnn_objdetect**: CNN目标检测 —— 基于OpenCV DNN模块的轻量级CNN目标检测模型。
+- **dnn_superres**: CNN超分辨率 —— 四种预训练网络用于图像超分。
+- **dnns_easily_fooled**: DNN对抗攻击 —— 通过激活值干扰使神经网络误判。
+- **dpm**: 可变形部件模型 —— Felzenszwalb提出的级联可变形部件目标检测。
+- **face**: 人脸识别 —— 包含Eigen、Fisher和LBPH方法。
+- **freetype**: 使用Freetype和Harfbuzz渲染文字。
+- **fuzzy**: 模糊逻辑图像处理 —— 模糊变换与逆变换。
+- **hdf**: 层次化数据存储 —— 支持HDF5格式的大规模数据读写。
+- **hfs**: 分层特征选择图像分割 —— 高效图像分割算法。
+- **img_hash**: 图像哈希提取 —— 通过哈希值评估图像相似度。
+- **intensity_transform**: 图像对比度增强算法。
+- **julia**: Julia语言接口及示例。
+- **line_descriptor**: 线段提取与匹配 —— 基于二进制描述符的线段处理。
+- **matlab**: Matlab接口 —— 核心模块的Matlab Mex封装生成器。
+- **mcc**: 麦克白色卡检测 —— 定位色卡中的颜色块。
+- **optflow**: 光流算法 —— 包含deepflow、simpleflow、sparsetodenseflow及运动模板。
+- **ovis**: OGRE 3D可视化引擎 —— 3D数据渲染支持。
+- **phase_unwrapping**: 相位解包裹算法。
+- **plot**: 数据可视化 —— 支持1D/2D数据绘图。
+- **quality**: 图像质量分析API。
+- **rapid**: 基于轮廓的3D物体跟踪。
+- **reg**: 图像配准 —— 像素级精准对齐（参考Richard Szeliski的教程）。
+- **rgbd**: RGB-D处理 —— 包含Linemod 3D识别、快速法向量估计、KinectFusion重建等。
+- **saliency**: 视觉显著性 —— 静态/运动/目标显著性检测。
+- **signal**: 信号处理算法。
+- **sfm**: 运动恢复结构 —— 从2D图像进行3D重建（轻量化Libmv实现）。
+- **shape**: 形状距离与匹配。
+- **stereo**: 立体匹配 —— 支持Census/CS-Census/MCT等描述符及准稠密匹配。
+- **structured_light**: 结构光应用 —— 生成格雷码模式并用于深度估计。
+- **superres**: 超分辨率。
+- **surface_matching**: 点对特征 —— 多模态点对特征3D物体检测。
+- **text**: 场景文本检测与识别。
+- **tracking**: 视觉目标跟踪 —— 多种跟踪算法实现与评估。
+- **videostab**: 视频稳像。
+- **viz**: 3D可视化工具。
+- **wechat_qrcode**: 微信二维码检测与解析。
+- **xfeatures2d**: 扩展2D特征 —— 包含SURF、BRIEF、DAISY等非免费算法。
+- **ximgproc**: 扩展图像处理 —— 结构化森林/导向滤波/超像素分割等。
+- **xobjdetect**: 增强2D目标检测 —— 基于Waldboost与积分LBP特征。
+- **xphoto**: 扩展计算摄影 —— 白平衡/去噪/修复算法。

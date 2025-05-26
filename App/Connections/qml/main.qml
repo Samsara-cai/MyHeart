@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import CommonQml 1.0
+import Connections
 
 FramelessWindow{
     id: mainWindow
@@ -62,7 +63,8 @@ FramelessWindow{
                 }
             }
             onCheckedChanged: {
-                //TODO: 打开连接的stackView
+               if(checked)
+                    controlStack.currentIndex = 0
             }
 
         }
@@ -106,6 +108,10 @@ FramelessWindow{
                     visible: protocalBtn.checked
                 }
             }
+            onCheckedChanged: {
+               if(checked)
+                    controlStack.currentIndex = 1
+            }
         }
 
         ToolButton{
@@ -138,6 +144,67 @@ FramelessWindow{
         }
     }
 
+    SplitView {
+        id:mainView
+        anchors.left: mainTool.right
+        anchors.leftMargin: 1
+        anchors.bottom: statusBar.top
+        anchors.bottomMargin: 1
+        anchors.top: windowTitle.bottom
+        anchors.topMargin: 1
+        anchors.right: parent.right
+        orientation: Qt.Vertical
+        spacing: 1
+        handle: Rectangle {
+                 id: verticalHandleDelegate
+                 implicitWidth: 2
+                 implicitHeight: 2
+                 color: SplitHandle.pressed ? "#0078d4"
+                     : (SplitHandle.hovered ? Qt.lighter("#0078d4", 1.1) : "#1f1f1f")
+             }
+
+        SplitView{
+            id: controlView
+            orientation: Qt.Horizontal
+            SplitView.fillHeight: true
+            SplitView.minimumHeight: 120
+            handle: Rectangle {
+                     id: horitalHandleDelegate
+                     implicitWidth: 2
+                     implicitHeight: 2
+                     color: SplitHandle.pressed ? "#0078d4"
+                         : (SplitHandle.hovered ? Qt.lighter("#0078d4", 1.1) : "#1f1f1f")
+                 }
+
+
+
+            StackLayout{
+                id: controlStack
+                currentIndex: 0
+                SplitView.preferredWidth:  250
+
+                Loader{
+                    source: "connectionCtrlUI.qml"
+                }
+
+
+            }
+
+            Rectangle{
+                id: showArea
+                color: "transparent"
+                SplitView.minimumWidth: 300
+            }
+        }
+
+        Rectangle{
+            //输出视图
+            id: outPutView
+            color: "#181818"
+            SplitView.preferredHeight: 150  // 初始高度
+        }
+    }
+
     Rectangle{
         id: statusBar
         height: 24
@@ -146,5 +213,4 @@ FramelessWindow{
         anchors.bottom: parent.bottom
         color:"#181818"
     }
-
 }
